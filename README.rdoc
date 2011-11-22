@@ -1,0 +1,38 @@
+= Pair
+
+Pair gem for collaborating between two or more remote pairs. The gem will facilite starting a hosted
+session where multiple pairs access the computer of the hosted user.
+
+== Requirements
+
+Hosting Users:
+
+* All users must have a github account with up-to-date public keys
+* Must have a variant of unix installed
+* Must have tmux installed
+
+== Example
+
+=== Interactive hosted session
+
+bin/pairmill host -p<github-user>,<github-user>,<github-user>
+
+=== Interactive hosted session
+
+bin/pairmill host -v<github-user>,<github-user>,<github-user>
+
+== Contributing to pair
+ 
+* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
+* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
+* Fork the project
+* Start a feature/bugfix branch
+* Commit and push until you are happy with your contribution
+* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+
+== Copyright
+
+Copyright (c) 2011 Pair. See LICENSE.txt for
+further details.
+

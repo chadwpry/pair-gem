@@ -1,0 +1,13 @@
+rvm 1.9.2-p180@pair-gem --create
+
+bundler=`gem list bundler | grep bundler`
+if [ $? -eq 1 ] ; then
+  echo "Installing bundler for project:\n\n";
+  gem install bundler;
+
+  echo; read -s -n 1 -p "Run bundler install y/n" confirm; echo; echo;
+  if [ "$confirm" == "y" ]; then
+    bundle install;
+  fi
+fi
+

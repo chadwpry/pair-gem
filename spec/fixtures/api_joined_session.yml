@@ -1,0 +1,8 @@
+session:
+  id: 124
+  version: 0.1.0
+  name: Testing Channel
+  tunnel:
+    ssh_user: host
+    ssh_server: bastion.pairmill.com
+    ssh_port: 22
