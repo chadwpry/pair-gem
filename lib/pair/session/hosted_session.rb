@@ -27,6 +27,7 @@ module Pair
           puts "There was a problem starting the host session %s" % (name && name.inspect)
           puts "response: #{response.inspect}" if response && $-d
           puts ""
+          abort
         end
 
         exit
@@ -37,7 +38,7 @@ module Pair
         puts ""
         puts "	#{connect_command}"
         puts ""
-        print "Press any key to continue..."
+        print "Press [Enter] to continue..."
 
         gets
       end

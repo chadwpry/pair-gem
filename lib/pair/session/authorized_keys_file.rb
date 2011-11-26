@@ -1,5 +1,6 @@
 module Pair
   class Session
+    # TODO replace with authorized_keys gem
     class AuthorizedKeysFile
       ACCESS_TYPE = "type"
       KEYS        = "keys"
@@ -9,13 +10,13 @@ module Pair
       attr_accessor :key_file_path
 
       def initialize(member_keys = {}, session)
-        self.member_keys = member_keys
-        self.session = session
+        self.member_keys   = member_keys
+        self.session       = session
         self.key_file_path = File.expand_path("~/.ssh/authorized_keys")
       end
 
       def install
-        return nil if self.member_keys.values.empty? || self.member_keys.values.map { |k,v| v }.empty?
+        return if member_keys.empty?
 
         backup_authorized_keys if key_file_exists?
         create_authorized_keys
