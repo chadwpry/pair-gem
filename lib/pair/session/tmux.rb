@@ -1,6 +1,6 @@
 require 'fileutils'
 
-module Pairmill
+module Pair
   class Session
     class Tmux
       TMP_PATH = "/tmp"
@@ -34,9 +34,15 @@ module Pairmill
         self.session.cleanup_authorized_keys if self.session.respond_to?(:cleanup_authorized_keys)
       end
 
-      # correct this method to use the remote user instead of chad
       def window(command)
-        args = %W[-S #{socket_path} new-window -t #{session.name}:0 -n 'Pairing', 'ssh pair@bastion.pairmill.com -l chad -A']
+        args = %W[
+          -S #{socket_path}
+          new-window
+          -t #{session.name}:0
+          -n 'Pairing'
+          'ssh pair@bastion.pairmill.com -A'
+        ]
+
         system "tmux", *args
       end
 
@@ -61,7 +67,7 @@ module Pairmill
       end
 
       def socket_name
-        "tmux-#{session.name}"#-#{unique}"
+        "tmux-#{session.name}"
       end
     end
   end

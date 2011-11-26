@@ -1,4 +1,4 @@
-module Pairmill
+module Pair
   class Session
     class AuthorizedKeysFile
       ACCESS_TYPE = "type"
@@ -58,7 +58,7 @@ module Pairmill
       end
 
       def backup_key_file_path
-        "#{self.key_file_path}.pairmill"
+        "#{self.key_file_path}.pair"
       end
 
       private

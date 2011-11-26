@@ -1,10 +1,9 @@
-require "pairmill/session/tmux"
-require "pairmill/session/tunnel"
-require "pairmill/session/authorized_keys_file"
-require "pairmill/session/hosted_session"
-require "pairmill/session/joined_session"
+require "pair/session/tmux"
+require "pair/session/tunnel"
+require "pair/session/authorized_keys_file"
+require "pair/session/hosted_session"
 
-module Pairmill
+module Pair
   class Session
     attr_accessor :host,  :name,  :options,  :viewers,  :participants
     private       :host=, :name=, :options=, :viewers=, :participants=

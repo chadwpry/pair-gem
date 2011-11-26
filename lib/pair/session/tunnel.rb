@@ -1,4 +1,4 @@
-module Pairmill
+module Pair
   class Session
     class Tunnel
       attr_accessor :options,  :tunnel

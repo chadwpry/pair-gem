@@ -1,7 +1,7 @@
-require "pairmill"
+require "pair"
 require "optparse"
 
-module Pairmill
+module Pair
   class CommandLine
     attr_accessor :arguments,  :options
     private       :arguments=, :options=
@@ -17,11 +17,8 @@ module Pairmill
 
     def run!
       case command = arguments.shift
-      # when 'join'
-        # require "pairmill/command_line/join"
-        # Join.run!(arguments)
       when 'host'
-        require "pairmill/command_line/host"
+        require "pair/command_line/host"
         Host.run!(arguments)
       else
         unknown_command(command)

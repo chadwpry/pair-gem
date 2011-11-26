@@ -1,4 +1,4 @@
-module Pairmill
+module Pair
   class Session
     class HostedSession < self
       attr_accessor :tunnel,  :authorized_keys_file,  :tmux,  :response

@@ -1,18 +1,18 @@
-require "pairmill/command_line"
+require "pair/command_line"
 
-module Pairmill
+module Pair
   class CommandLine
     class Host < self
       def run!
         parse!
-        Pairmill::Session.host(options)
+        Pair::Session.host(options)
       end
 
       def parse!
         opts = parse do |opts|
           opts.banner = "Usage: #{$0} host [-s SESSION_NAME] [-v PAIR[,PAIR[,...]] [-p PAIR[,PAIR[,...]]" +
                         "\n\n" +
-                        "At least one PAIR (of any type must be defined). A PAIR is either a Github username or email address." +
+                        "At least one PAIR (of any type must be defined). A PAIR takes the form of a Github username." +
                         "\n\n"+
                         "Options:"
 

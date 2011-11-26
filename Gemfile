@@ -1,11 +1,4 @@
-source "http://rubygems.org"
+source 'http://rubygems.org'
 
-gem 'httparty'
-
-group :development do
-  gem "ruby-debug19"
-  gem "rspec", "~> 2.3.0"
-  gem "cucumber", ">= 0"
-  gem "jeweler", "~> 1.6.0"
-  gem "rcov", ">= 0"
-end
+# Specify your gem's dependencies in pair.gemspec
+gemspec

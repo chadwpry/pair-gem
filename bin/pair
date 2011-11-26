@@ -2,6 +2,6 @@
 
 $: << File.expand_path(File.join(File.dirname(__FILE__), '..', 'lib'))
 
-require "pairmill/command_line"
-Pairmill::CommandLine.run!(ARGV)
+require "pair/command_line"
+Pair::CommandLine.run!(ARGV)
 

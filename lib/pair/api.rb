@@ -1,6 +1,6 @@
 require 'yaml'
 
-module Pairmill
+module Pair
   module Api
     def create_session(session)
       post("/v1/sessions", {
@@ -35,7 +35,7 @@ module Pairmill
     end
 
     def config_file
-      File.expand_path("~/.pairmill.yml")
+      File.expand_path("~/.pair.yml")
     end
 
     def setup_config
