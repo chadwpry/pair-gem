@@ -1,8 +1,16 @@
 module Pair
   class Session
+    def self.host(options)
+      session = HostedSession.new(options)
+      at_exit { session.stop! }
+
+      session.start!
+      session.stop!
+    end
+
     class HostedSession < self
-      attr_accessor :tunnel,  :authorized_keys_file,  :tmux,  :response
-      private       :tunnel=, :authorized_keys_file=, :tmux=, :response=
+      attr_accessor :tunnel,  :authorized_keys_file,  :response
+      private       :tunnel=, :authorized_keys_file=, :response=
 
       def initialize(options = {})
         puts "Hosting session #{"called #{options[:name].inspect} " if options[:name]}..."
@@ -10,7 +18,6 @@ module Pair
         self.name         = options.delete(:name)
         self.viewers      = options.delete(:viewers)      || []
         self.participants = options.delete(:participants) || []
-        self.tmux         = Tmux.new(self)
 
         super(options)
       end
@@ -24,13 +31,36 @@ module Pair
             tmux.attach
           end
         else
-          puts "There was a problem starting the host session %s" % (name && name.inspect)
-          puts "response: #{response.inspect}" if response && $-d
-          puts ""
-          abort
+          connection_error!
         end
 
         exit
+      end
+
+      def stop!
+        tmux.stop
+        tunnel.close
+        cleanup_authorized_keys
+      rescue
+        raise if $-d
+      end
+
+      def host_login
+        `whoami`.chomp
+      end
+
+      private
+
+      def tmux
+        @tmux ||= Tmux.new(name)
+      end
+
+      def tunnel
+        @tunnel ||= Tunnel.new(response["tunnel"])
+      end
+
+      def authorized_keys_file
+        @key_file ||= AuthorizedKeysFile.new(response["member_keys"], tmux.method(:attach_command))
       end
 
       def display_startup_message
@@ -43,7 +73,6 @@ module Pair
         gets
       end
 
-      # TODO: this should get host/user from response
       def connect_command
         "ssh-add; ssh -tqA -l#{bastion["join_user"]} #{bastion["host"]} #{name}"
       end
@@ -52,15 +81,9 @@ module Pair
         response["tunnel"]["bastion"]
       end
 
-      def host_login
-        `whoami`.chomp
-      end
-
       def cleanup_authorized_keys
         authorized_keys_file.cleanup
       end
-
-      private
 
       def setup
         create_session_on_server && authorized_keys_file.install
@@ -68,23 +91,20 @@ module Pair
 
       def create_session_on_server
         self.response = Api.create_session(self)["session"]
-
-        if self.response
-          self.name                 = response["name"]
-          self.tunnel               = Tunnel.new(self.response["tunnel"].merge(:host => true))
-          self.authorized_keys_file = AuthorizedKeysFile.new(self.response["member_keys"], self)
+        if response
+          self.name = response['name']
+          true
+        else
+          false
         end
       end
 
-      def stop!
-        tunnel.close
-        tmux.stop
-        cleanup_authorized_keys
+      def connection_error!
+        puts "There was a problem starting the host session %s" % (name && name.inspect)
+        puts "response: #{response.inspect}" if response && $-d
+        puts ""
+        abort
       end
-    end
-
-    def self.host(options)
-      HostedSession.new(options).start!
     end
   end
 end

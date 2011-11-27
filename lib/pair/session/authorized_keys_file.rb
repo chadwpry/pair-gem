@@ -6,13 +6,13 @@ module Pair
       KEYS        = "keys"
 
       attr_accessor :member_keys
-      attr_accessor :session
+      attr_accessor :attach_command
       attr_accessor :key_file_path
 
-      def initialize(member_keys = {}, session)
-        self.member_keys   = member_keys
-        self.session       = session
-        self.key_file_path = File.expand_path("~/.ssh/authorized_keys")
+      def initialize(member_keys = {}, attach_command)
+        self.member_keys    = member_keys
+        self.attach_command = attach_command
+        self.key_file_path  = File.expand_path("~/.ssh/authorized_keys")
       end
 
       def install
@@ -46,10 +46,6 @@ module Pair
         FileUtils.mv(backup_key_file_path, self.key_file_path)
       end
 
-      def line_numbers_of(key)
-        `grep -ns ".*#{key}.*" #{self.key_file_path} | sed 's/\:.*//'`.split('\n').map(&:strip)
-      end
-
       def key_file_exists?
         File.exists? self.key_file_path
       end
@@ -80,17 +76,18 @@ module Pair
       end
 
       def write_rows_for keys, of_type, in_file
+        read_only = of_type == 'viewer'
+
         keys.each do |key|
-          in_file.puts "command=\"#{command(session, of_type)}\",#{key_options.join(',')} #{key["content"]} #id:#{key["id"]}"
+          command = attach_command[read_only].join(' ').inspect
+
+          options = ["command=#{command}", *key_options].join(',')
+          content = key["content"]
+          comment = "# id: #{key["id"]}"
+
+          in_file.puts [options, content, comment].join(' ')
         end
         in_file.puts ""
-      end
-
-      def command(session, type)
-        options = ["-S /tmp/pairmill/tmux-#{session.name} attach"]
-        options << "-r" if type == 'viewer'
-
-        "/usr/local/bin/tmux #{options.join(' ')}"
       end
 
       def key_options

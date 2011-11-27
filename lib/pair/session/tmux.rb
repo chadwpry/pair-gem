@@ -1,73 +1,48 @@
 require 'fileutils'
+require 'tmpdir'
 
 module Pair
   class Session
     class Tmux
-      TMP_PATH = "/tmp"
+      attr_accessor :session_name
+      private       :session_name=
 
-      attr_accessor :session
-      private       :session=
-
-      def initialize(session)
-        self.session = session
-        create_socket_directory
-      end
-
-      def app_path
-        self.class.to_s.split('::').first.downcase
-      end
-
-      def unique
-        @unique ||= srand.to_s[0,5]
+      def initialize(session_name)
+        self.session_name = session_name
       end
 
       def start
         args = %W[-S #{socket_path} new-session -d]
-        system "tmux", *args
-
-        at_exit { stop }
-      end
-
-      def stop
-        `lsof -t #{socket_path}/ | xargs kill -9`
-        FileUtils.rm_f(socket_path)
-        self.session.cleanup_authorized_keys if self.session.respond_to?(:cleanup_authorized_keys)
-      end
-
-      def window(command)
-        args = %W[
-          -S #{socket_path}
-          new-window
-          -t #{session.name}:0
-          -n 'Pairing'
-          'ssh pair@bastion.pairmill.com -A'
-        ]
-
-        system "tmux", *args
+        system tmux, *args
       end
 
       def attach(read_only = false)
-        args = %W[-S #{socket_path} attach]
-        args += " -r" if read_only
+        system(*attach_command(read_only))
+      end
 
-        system "tmux", *args
+      def stop
+        `lsof -t #{socket_path}/ 2>/dev/null | xargs kill -9`
+        FileUtils.rm_f(socket_path)
+      end
+
+      def attach_command(read_only = false)
+        args = %W[#{tmux} -S #{socket_path} attach]
+        args << " -r" if read_only
+        args
       end
 
       private
-      def create_socket_directory
-        FileUtils.mkdir_p(socket_directory, :mode => 0700)
-      end
 
-      def socket_directory
-        File.join TMP_PATH, app_path
+      def tmux
+        @tmux ||= `which tmux`.chomp
       end
 
       def socket_path
-        File.join socket_directory, socket_name
+        File.join(Dir.tmpdir, socket_name)
       end
 
       def socket_name
-        "tmux-#{session.name}"
+        "pair-#{session_name.gsub(/[^\w_-]+/,'')}.tmux"
       end
     end
   end

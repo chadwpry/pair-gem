@@ -24,8 +24,11 @@ module Pair
       def open
         self.tunnel = IO.popen(ssh_command)
         puts "SSH tunnel started (PID = #{tunnel.pid})" if $-d
-        at_exit { close }
-        yield if block_given?
+
+        if block_given?
+          yield
+          close
+        end
       end
 
       def close
@@ -41,15 +44,11 @@ module Pair
 
       def ssh_command
         options = []
-        if self.options[:host]
-          options << "-nq"
-          options << "-l #{bastion["host_user"]}"
-          options << "-p #{bastion["ssh_port"]}" unless bastion["ssh_port"] == 22
-          options << "-R #{port}:localhost:#{host_port}"
-        else
-          options << "-tAq"
-          options << "-l #{bastion["join_user"]}"
-        end
+
+        options << "-nqT" # Run no command, be quiet, don't allocate pseudo-terminal
+        options << "-l #{bastion["host_user"]}"
+        options << "-p #{bastion["ssh_port"]}" unless bastion["ssh_port"] == 22
+        options << "-R #{port}:localhost:#{host_port}"
 
         "ssh #{bastion["host"]} #{options.join(" ")}"
       end
