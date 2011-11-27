@@ -2,10 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
 require 'fileutils'
 
-describe Pairmill::Session::AuthorizedKeysFile do
+describe Pair::Session::AuthorizedKeysFile do
   let(:member_keys) { FixtureHelper.user_keys }
   let(:session) { "testing-session" }
-  let(:subject) { Pairmill::Session::AuthorizedKeysFile.new(member_keys, session) }
+  let(:subject) { Pair::Session::AuthorizedKeysFile.new(member_keys, session) }
 
   before do
     subject.stub!(:backup_authorized_keys)
