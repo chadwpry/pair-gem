@@ -11,18 +11,24 @@ Hosting Users:
 * Must have a variant of unix installed
 * Must have tmux installed
 
+== Installation
+Pair is available on {RubyGems}[http://rubygems.org/gems/pair]; the
+easiest way to install it is
+
+    gem install pair
+
 == Example
 
 === Hosting an interactive session
 In interactive mode, participants can interact with the tmux session.
 
-    bin/pair host -p<github-user>,<github-user>,<github-user>
+    pair host -p<github-user>,<github-user>,<github-user>
 
 === Hosting a view-only session
 In view mode, participants can see your tmux session but may not
 interact with it.
 
-    bin/pair host -v<github-user>,<github-user>,<github-user>
+    pair host -v<github-user>,<github-user>,<github-user>
 
 == Contributing to pair
  
