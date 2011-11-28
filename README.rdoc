@@ -16,13 +16,13 @@ Hosting Users:
 === Hosting an interactive session
 In interactive mode, participants can interact with the tmux session.
 
-    bin/pairmill host -p<github-user>,<github-user>,<github-user>
+    bin/pair host -p<github-user>,<github-user>,<github-user>
 
 === Hosting a view-only session
 In view mode, participants can see your tmux session but may not
 interact with it.
 
-    bin/pairmill host -v<github-user>,<github-user>,<github-user>
+    bin/pair host -v<github-user>,<github-user>,<github-user>
 
 == Contributing to pair
  
