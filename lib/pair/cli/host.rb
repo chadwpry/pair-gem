@@ -1,7 +1,7 @@
 require "pair/command_line"
 
 module Pair
-  class CommandLine
+  class Cli
     class Host < self
       def run!
         parse!

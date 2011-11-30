@@ -2,7 +2,7 @@ require "pair"
 require "optparse"
 
 module Pair
-  class CommandLine
+  class Cli
     attr_accessor :arguments,  :options
     private       :arguments=, :options=
 
@@ -18,7 +18,7 @@ module Pair
     def run!
       case command = arguments.shift
       when 'host'
-        require "pair/command_line/host"
+        require "pair/cli/host"
         Host.run!(arguments)
       else
         unknown_command(command)
