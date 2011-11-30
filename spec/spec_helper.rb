@@ -13,10 +13,6 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 RSpec.configure do |config|
   config.before do
     # Never ask for API token in tests
-    config_hash = {}
-    YAML::Store.stub!(:new => config_hash)
-    def config_hash.transaction
-      yield
-    end
+    Pair.stub!(:config => stub(:api_token => "xxxx"))
   end
 end

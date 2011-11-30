@@ -9,6 +9,13 @@ describe Pair::Config do
 
   let(:config) { described_class.new(host, stdin, stdout) }
 
+  before do
+    YAML::Store.stub!(:new => config_hash)
+    def config_hash.transaction
+      yield
+    end
+  end
+
   context "for different hosts" do
     it "has a different set of configs for each host" do
       host1, host2 = "api.domain.com", "api.beta.domain.com"
