@@ -1,8 +1,8 @@
-require 'httparty'
-
-require "pair/version"
-require "pair/api"
-require "pair/session"
-
 module Pair
 end
+
+require "pair/version"
+
+require "pair/config"
+require "pair/api"
+require "pair/session"
