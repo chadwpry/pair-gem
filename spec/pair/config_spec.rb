@@ -10,6 +10,7 @@ describe Pair::Config do
   let(:config) { described_class.new(host, stdin, stdout) }
 
   before do
+    config_hash = {}
     YAML::Store.stub!(:new => config_hash)
     def config_hash.transaction
       yield
