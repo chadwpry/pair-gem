@@ -9,8 +9,8 @@ module Pair
       attr_accessor :attach_command
       attr_accessor :key_file_path
 
-      def initialize(member_keys = {}, attach_command)
-        self.member_keys    = member_keys
+      def initialize(member_keys, attach_command)
+        self.member_keys    = member_keys || {}
         self.attach_command = attach_command
         self.key_file_path  = File.expand_path("~/.ssh/authorized_keys")
       end
