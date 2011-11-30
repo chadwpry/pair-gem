@@ -1,5 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../../spec_helper')
 
+require 'pair/session/authorized_keys_file'
 require 'fileutils'
 
 describe Pair::Session::AuthorizedKeysFile do
