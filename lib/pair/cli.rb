@@ -1,4 +1,5 @@
 require "pair"
+require 'pair/cli/custom_errors'
 require "optparse"
 
 module Pair

@@ -1,10 +1,5 @@
-#require "pair/command_line"
-
 module Pair
   class Cli
-    class ApiTokenMissingError < StandardError; end
-    class EnableSSHError < StandardError; end
-
     class Host < self
       def run!
         parse!
