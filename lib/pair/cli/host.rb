@@ -1,11 +1,31 @@
-require "pair/command_line"
+#require "pair/command_line"
 
 module Pair
   class Cli
+    class ApiTokenMissingError < StandardError; end
+    class EnableSSHError < StandardError; end
+
     class Host < self
       def run!
         parse!
-        Pair::Session.host(options)
+
+        with_valid_config do
+          Pair::Session.host(options)
+        end
+      end
+
+      def with_valid_config
+        config = Pair.config
+
+        unless config.api_token
+          raise ApiTokenMissingError.new("api-token is required. try --help to understand how")
+        end
+
+        unless config.ssh_enabled?
+          raise EnableSSHError.new("ssh is not enabled, turn on ssh daemon to continue")
+        end
+
+        yield
       end
 
       def parse!
