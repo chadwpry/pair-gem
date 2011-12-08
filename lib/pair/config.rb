@@ -1,26 +1,29 @@
 require 'yaml/store'
 
 module Pair
-  def self.config
-    host = ENV['HOST'] || "api.pairmill.com"
-    Config.new(host, STDIN, STDOUT)
+  HOST = ENV['HOST'] || "api.pairmill.com"
+
+  def self.config(options = nil)
+    config = Config.new(HOST, STDIN, STDOUT)
+    config.update(options) if options
+    config
   end
 
   class Config
     attr_accessor :host, :input, :output
 
-    def initialize(host, input = STDIN, output = STDOUT)
+    def initialize(host = HOST, input = STDIN, output = STDOUT)
       self.host   = host
       self.input  = input
       self.output = output
     end
 
-    def api_token
-      self[:api_token] ||= begin
-        print "Please input your API token for Pair: "
-        gets.chomp
-      end
-    end
+#    def api_token
+#      self[:api_token] ||= begin
+#        print "Please input your API token for Pair: "
+#        gets.chomp
+#      end
+#    end
 
     def method_missing(method, *args, &block)
       method = method.to_s
@@ -32,8 +35,31 @@ module Pair
       end
     end
 
-    protected
+    def api_token
+      self[:api_token]
+    end
 
+    def enable_ssh
+      self[:enable_ssh]
+    end
+
+    def ssh_enabled?
+      if Pair::OS.x?
+        `systemsetup -getremotelogin`.match("Remote Login: On")
+      end
+    end
+
+    def update(options = {})
+      if options.is_a? Hash
+        options.each do |k,v|
+          config.transaction do
+            host_config[k] = v
+          end
+        end
+      end
+    end
+
+    protected
     def [](key)
       config.transaction do
         host_config[key]

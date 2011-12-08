@@ -1,16 +1,31 @@
-require "pair/command_line"
-
 module Pair
   class Cli
     class Host < self
       def run!
         parse!
-        Pair::Session.host(options)
+
+        with_valid_config do
+          Pair::Session.host(options)
+        end
+      end
+
+      def with_valid_config
+        config = Pair.config
+
+        unless config.api_token
+          raise ApiTokenMissingError.new("api-token is required. try --help to understand how")
+        end
+
+        unless config.ssh_enabled?
+          raise EnableSSHError.new("ssh is not enabled, turn on ssh daemon to continue")
+        end
+
+        yield
       end
 
       def parse!
         opts = parse do |opts|
-          opts.banner = "Usage: #{$0} host [-s SESSION_NAME] [-v PAIR[,PAIR[,...]] [-p PAIR[,PAIR[,...]]" +
+          opts.banner = "Usage: #{$0.split("/").last} host [-s SESSION_NAME] [-v PAIR[,PAIR[,...]] [-p PAIR[,PAIR[,...]]" +
                         "\n\n" +
                         "At least one PAIR (of any type must be defined). A PAIR takes the form of a Github username." +
                         "\n\n"+
