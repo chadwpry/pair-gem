@@ -25,7 +25,7 @@ module Pair
 
       def parse!
         opts = parse do |opts|
-          opts.banner = "Usage: #{$0} host [-s SESSION_NAME] [-v PAIR[,PAIR[,...]] [-p PAIR[,PAIR[,...]]" +
+          opts.banner = "Usage: #{$0.split("/").last} host [-s SESSION_NAME] [-v PAIR[,PAIR[,...]] [-p PAIR[,PAIR[,...]]" +
                         "\n\n" +
                         "At least one PAIR (of any type must be defined). A PAIR takes the form of a Github username." +
                         "\n\n"+

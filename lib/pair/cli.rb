@@ -52,11 +52,11 @@ module Pair
 
       #{$0} join [options]
       abort %Q[
-        Usage: #{$0} host [options]
+        Usage: #{$0.split("/").last} host [options]
 
         You can pass -h to a subcommand to learn more about it.
 
-          e.g. #{$0} join -h
+          e.g. #{$0.split("/").last} join -h
       ].gsub(/^ {0,9}/,'')
     end
 
