@@ -34,25 +34,6 @@ describe Pair::Config do
   end
 
   describe '#api_token' do
-#    context "when none is saved" do
-#      it "prompts for key to be entered" do
-#        response = "abc123"
-#        stdin << "#{response}\n"
-#        stdin.rewind
-#
-#        config.api_token.should == response
-#
-#        stdout.rewind
-#        stdout.read.should == "Please input your API token for Pair: "
-#      end
-#
-#      it "saves the key" do
-#        stdin.should_receive(:gets).once.and_return("abc123\n")
-#        config.api_token
-#        config.api_token
-#      end
-#    end
-
     context "when one is already saved" do
       it "returns the saved value" do
         api_token = "abc123"

@@ -18,13 +18,6 @@ module Pair
       self.output = output
     end
 
-#    def api_token
-#      self[:api_token] ||= begin
-#        print "Please input your API token for Pair: "
-#        gets.chomp
-#      end
-#    end
-
     def method_missing(method, *args, &block)
       method = method.to_s
 
@@ -46,6 +39,8 @@ module Pair
     def ssh_enabled?
       if Pair::OS.x?
         `systemsetup -getremotelogin`.match("Remote Login: On")
+      elsif Pair::OS.linux?
+        `ps aux | grep sshd | grep -v grep` != ""
       end
     end
 

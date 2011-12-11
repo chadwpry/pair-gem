@@ -1,13 +1,11 @@
-require 'rbconfig'
-
 module Pair
   module OS
     def linux?
-      !RbConfig::CONFIG['target_os'].match("linux").nil?
+      RUBY_PLATFORM =~ /linux/
     end
 
     def self.x?
-      !RbConfig::CONFIG['target_os'].match("darwin").nil?
+      RUBY_PLATFORM =~ /darwin/
     end
   end
 end

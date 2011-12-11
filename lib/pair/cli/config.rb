@@ -17,10 +17,6 @@ module Pair
           opts.on("--api-token KEY") do |key|
             options[:api_token] = key
           end
-
-#          opts.on("--enable-ssh") do
-#            options[:enable_ssh] = true
-#          end
         end
       end
     end
