@@ -7,7 +7,7 @@ module Pair
     extend self
 
     def setup
-      base_uri ENV['BASE_URI'] || 'api.pairmill.com'
+      base_uri Pair.config.host
       default_params :api_token => Pair.config.api_token
       yield
     end
