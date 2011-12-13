@@ -28,14 +28,7 @@ module Pair
       end
     end
 
-    def api_token
-      self[:api_token]
-    end
-
-    def enable_ssh
-      self[:enable_ssh]
-    end
-
+    # FIXME: Does this belong in config?
     def ssh_enabled?
       if Pair::OS.x?
         `systemsetup -getremotelogin`.match("Remote Login: On")
