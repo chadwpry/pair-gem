@@ -39,15 +39,14 @@ module Pair
 
     def update(options = {})
       if options.is_a? Hash
-        options.each do |k,v|
-          config.transaction do
-            host_config[k] = v
-          end
+        options.each do |key, value|
+          self[key] = value
         end
       end
     end
 
     protected
+
     def [](key)
       config.transaction do
         host_config[key]
