@@ -1,6 +1,7 @@
 require "pair/notification/custom_errors"
 require "pair/notification/dispatcher"
 require "pair/notification/o_s_x_dispatcher"
+require "pair/notification/linux_dispatcher"
 
 module Pair
   class Notification
