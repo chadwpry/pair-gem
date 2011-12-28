@@ -1,3 +1,7 @@
+require "pair/notification/custom_errors"
+require "pair/notification/dispatcher"
+require "pair/notification/o_s_x_dispatcher"
+
 module Pair
   class Notification
     attr_reader :dispatch
@@ -7,7 +11,7 @@ module Pair
         if Pair::OS.os_x?
           dispatch = OSXDispatcher.new(options)
         else
-          raise NotImplementedError
+          dispatch = LinuxDispatcher.new(options)
         end
 
         if block_given?
@@ -19,8 +23,4 @@ module Pair
     end
   end
 end
-
-require "pair/notification/custom_errors"
-require "pair/notification/dispatcher"
-require "pair/notification/o_s_x_dispatcher"
 
