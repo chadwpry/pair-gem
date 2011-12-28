@@ -28,9 +28,24 @@ module Pair
       end
     end
 
+<<<<<<< HEAD
     # FIXME: Does this belong in config?
+=======
+    def api_token
+      self[:api_token]
+    end
+
+    def enable_ssh
+      self[:enable_ssh]
+    end
+
+    def growl_enabled?
+      self[:growl_enabled]
+    end
+
+>>>>>>> + check-in of files
     def ssh_enabled?
-      if Pair::OS.x?
+      if Pair::OS.os_x?
         `systemsetup -getremotelogin`.match("Remote Login: On")
       elsif Pair::OS.linux?
         `ps aux | grep sshd | grep -v grep` != ""

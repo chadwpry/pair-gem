@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
   gem.version       = Pair::VERSION
 
   gem.add_dependency("httparty", "~> 0.8.1")
+  gem.add_dependency("ruby_gntp", "~> 0.3.4")
 
   gem.add_development_dependency("rake")
   gem.add_development_dependency("rspec", "~> 2.7.0")

@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'rspec'
 require 'fixture_helper'
 
-require 'pair/config'
+require 'pair'
 
 # Requires supporting files with custom matchers and macros, etc,
 # in ./support/ and its subdirectories.

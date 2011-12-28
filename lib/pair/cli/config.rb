@@ -14,8 +14,12 @@ module Pair
                         "Options:" +
                         "\n"
 
-          opts.on("--api-token KEY") do |key|
+          opts.on("-t", "--api-token KEY") do |key|
             options[:api_token] = key
+          end
+
+          opts.on("-g", "--growl") do
+            options[:growl] = true
           end
         end
       end

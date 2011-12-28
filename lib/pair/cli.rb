@@ -24,14 +24,17 @@ module Pair
       when 'config'
         require "pair/cli/config"
         Config.run!(arguments)
+      when 'notify'
+        require "pair/cli/notify"
+        Notify.run!(arguments)
       else
         unknown_command(command)
       end
-    rescue ApiTokenMissingError, EnableSSHError => error
+    rescue ApiTokenMissingError, EnableSSHError, Pair::Notification::GNTPError => error
       handle_error error.message, false
     rescue SystemExit
       raise
-    rescue
+    rescue Exception => except
       handle_error "  Please contact support@pairmill.com, there\n" +
                    "  was an issue creating your session.", $-d
     end
