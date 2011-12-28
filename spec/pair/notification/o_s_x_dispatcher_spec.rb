@@ -6,9 +6,14 @@ describe Pair::Notification::OSXDispatcher do
       @growl = mock('gntp', :register => true, :notify => true)
       GNTP.stub!(:new).and_return(@growl)
       Pair.stub_chain(:config, :growl_enabled?).and_return(true)
+      Pair::OS.stub!(:os_x?).and_return(true)
     end
 
     describe "when initializing" do
+      it "is an OSXDispatcher" do
+        Pair::Notification.dispatcher.class.should be(Pair::Notification::OSXDispatcher)
+      end
+
       it "registers the application" do
         @growl.should_receive(:register)
         Pair::Notification.dispatcher
