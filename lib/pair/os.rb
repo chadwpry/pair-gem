@@ -1,10 +1,10 @@
 module Pair
   module OS
-    def linux?
+    def self.linux?
       RUBY_PLATFORM =~ /linux/
     end
 
-    def self.x?
+    def self.os_x?
       RUBY_PLATFORM =~ /darwin/
     end
   end

@@ -36,8 +36,12 @@ module Pair
       self[:enable_ssh]
     end
 
+    def growl_enabled?
+      self[:growl_enabled]
+    end
+
     def ssh_enabled?
-      if Pair::OS.x?
+      if Pair::OS.os_x?
         `systemsetup -getremotelogin`.match("Remote Login: On")
       elsif Pair::OS.linux?
         `ps aux | grep sshd | grep -v grep` != ""

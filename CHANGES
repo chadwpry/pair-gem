@@ -1,0 +1,9 @@
+rel 0.0.3
+
+* Add configuration component that sets config values in yaml
+
+rel 0.0.4
+
+* Add initial notifications configuration
+* Add growl for notifications on mac, supports lion and gntp
+
