@@ -1,0 +1,5 @@
+--- 
+api.pairmill.com: 
+  :api_token: XXXXXXXXXXXXXXXXXXXX
+  :growl_enabled: true
+  :ssh_enabled: true
