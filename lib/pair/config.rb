@@ -32,15 +32,15 @@ module Pair
       self[:api_token]
     end
 
-    def enable_ssh
-      self[:enable_ssh]
+    def ssh_enabled?
+      self[:ssh_enabled]
     end
 
     def growl_enabled?
       self[:growl_enabled]
     end
 
-    def ssh_enabled?
+    def ssh_on?
       if Pair::OS.os_x?
         `systemsetup -getremotelogin`.match("Remote Login: On")
       elsif Pair::OS.linux?

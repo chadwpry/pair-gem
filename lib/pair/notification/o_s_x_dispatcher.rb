@@ -11,7 +11,7 @@ module Pair
         @app_icon = options.delete(:app_icon)
         super
 
-        register_growl
+        register_growl if Pair.config.growl_enabled?
 
       rescue Errno::ECONNREFUSED => except
         raise Pair::Notification::GNTPError.new("Growl notification transfer protocol is not enabled, either start growl or disable growl via pair config")

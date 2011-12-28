@@ -16,7 +16,7 @@ module Pair
           raise ApiTokenMissingError.new("api-token is required. try --help to understand how")
         end
 
-        unless config.ssh_enabled?
+        unless config.ssh_on?
           raise EnableSSHError.new("ssh is not enabled, turn on ssh daemon to continue")
         end
 
