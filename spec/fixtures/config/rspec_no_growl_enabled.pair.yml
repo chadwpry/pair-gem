@@ -1,4 +1,4 @@
---- 
-api.pairmill.com: 
+---
+api.pairmill.com:
   :api_token: XXXXXXXXXXXXXXXXXXXX
   :ssh_enabled: true

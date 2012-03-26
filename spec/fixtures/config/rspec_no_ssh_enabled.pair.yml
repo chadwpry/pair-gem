@@ -1,4 +1,4 @@
---- 
-api.pairmill.com: 
+---
+api.pairmill.com:
   :api_token: XXXXXXXXXXXXXXXXXXXX
   :growl_enabled: true
