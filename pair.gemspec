@@ -2,16 +2,16 @@
 require File.expand_path('../lib/pair/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["Bodaniel Jeanes", "Chad W. Pry"]
-  gem.email         = ["me@bjeanes.com", "chad.pry@gmail.com"]
-  gem.description   = %q{Effortless remote pairing}
-  gem.summary       = %q{Pair with remote programmers with a single command.}
-  gem.homepage      = "http://www.pairmill.com"
+  gem.authors       = ["Bodaniel Jeanes", "Chad W. Pry", "Mr and Mrs Tree"]
+  gem.email         = ["me@bjeanes.com", "chad.pry@gmail.com", "bumblebee@tree.com"]
+  gem.description   = %q{When you just need to talk to a tree, pair!}
+  gem.summary       = %q{Pair with trees. they're cool}
+  gem.homepage      = "http://wwww.420.org"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")
   gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.name          = "pair"
+  gem.name          = "tree-pair"
   gem.require_paths = ["lib"]
   gem.version       = Pair::VERSION
 
